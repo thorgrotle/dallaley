@@ -1,0 +1,15 @@
+13 Service Bind9
+
+Prereq: isc-dhcp-server
+
+Packages:
+bind9 apparmor-utils apparmor-profiles
+
+
+rndc-confgen -a
+To create a rndc.key install bind9utils and enter command
+rndc-confgen -b 512 | grep secret
+
+systemctl enable isc-dhcp-server
+systemctl start isc-dhcp-server
+
