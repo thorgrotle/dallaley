@@ -1,0 +1,5 @@
+
+------ Disclaimer -------
+Use at own risk, this setup has been only been testet on APU4B4 from PCEngines
+Make sure to run this installer on a machine that has no critical data on it, as this could potential break the software installation.
+
