@@ -1,0 +1,22 @@
+vars:
+    NETPLANTEMPLATE: 'apu4lanonly.netplan.j2'    # Template to 
+    INTERNETNIC: wlp5s0                          # Interface facing Internet (In this case the wireless LAN: wlps5s0)
+    LANNIC: LAN0                                 # Interface facing LAN  (In this case the bond: LAN0)
+    SSID: TestWifi                               # Wireless network to connect to
+    PSK: Testpassword                            # Wireless network code
+    WIFI: wlp5s0                                 # Wireless Network Interface
+    WANIP: 192.168.0.100                         # IP for assigned interface facing Internet
+    WANDNS: 192.168.0.1                          # DNS server for assigned interface facing Internet
+    WANGATE: 192.168.0.1                         # Gateway for assigned interface facing Internet
+    LANGATE: 10.0.75.2                           # Gateway address will be assigned via DHCP server
+    LANIP: 10.0.75.2                             # IP for assigned interface facing LAN
+    LANDNS: 10.0.75.2                            # DNS address will be assign via DHCP server
+    LAN: 10.0.75.0                               # Network scope
+    LANRANGE: "10.0.75.100 10.0.75.199"          # Network scope for DHCP server to use.
+    LANDOMAIN: home.lan                          # Local domain name assigned by Bind9 / DHCP server for LAN
+    LANREVDOMAIN: home.lan.rev                   # Local reverse domain name assigned by Bind9 / DHCP server for LAN
+    LANREVIP: 75.0.10                            # Local reverse domain ip assigned by DHCP /DHCP server for LAN
+    LANNTP: 10.0.75.2                            # Timeserver assigned by DHCP
+    HOSTNAME: dallaley                           # Hostname for Router
+    RNDCKEY: 'G0/f1m00twTj4VHW74lZ7R1DiUJR0KgO3/D0Wgk1uyVlcbXsWaQBYy5VYtfcdlTZkOcx5ft75PkEaXUW7VC3gw==' # Hash value Se RNDCKEY guide
+    ZABBIXPW: Test0001                           # Password for Zabbixserver and database

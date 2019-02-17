@@ -1,0 +1,13 @@
+Ubuntu 18.04
+
+Download the ubuntu server alternative iso
+Write that to USB key (Using: Etcher.io, Startup Disk Make, dd)
+Connect Console cable and listen at speed 115200n8 (putty)
+Press F10 and boot from USB
+Boot error will occur, enter the following to boot with serial enabled:
+install vga=off console=ttyS0,115200n8
+Install with LVM2 - make sure there is space for snapshot
+
+
+After install, run ip addr to see interfaces like NIC and wlan + MAC adresses
+

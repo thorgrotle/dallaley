@@ -1,0 +1,11 @@
+---
+- name: Linux install Network-Manager
+  apt: name=network-manager state=latest
+  notify: start network-manager
+
+- name: Installing new netplan
+  copy: src=01-netcfg.yaml dest=/etc/netplan/01-netcfg.yaml
+
+- name: Linux Restart network
+  raw: "netplan apply"
+  

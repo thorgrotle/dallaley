@@ -1,0 +1,13 @@
+$ORIGIN .
+$TTL 600	; 10 minutes
+{{ LANDOMAIN }}                 IN SOA	{{ HOSTNAME }}.{{ LANDOMAIN }}. admin.{{ LANDOMAIN }}. (
+				2018022916 ; serial
+				28800      ; refresh (8 hours)
+				7200       ; retry (2 hours)
+				864000     ; expire (1 week 3 days)
+				86400      ; minimum (1 day)
+				)
+			NS	{{ HOSTNAME}}.{{ LANDOMAIN }}.
+$ORIGIN {{ LANDOMAIN }}.
+{{ HOSTNAME }}                 A       {{ LANIP }}
+$TTL 600	; 10 minutes

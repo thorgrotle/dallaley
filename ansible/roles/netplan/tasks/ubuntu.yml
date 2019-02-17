@@ -1,0 +1,17 @@
+---
+- name: install wpasupplicants
+  apt: name=wpasupplicant state=latest
+
+- name: Install netplan for client
+  template:
+   src: "{{ NETPLANTEMPLATE }}"
+   dest: /etc/netplan/01-netcfg.yaml
+   owner: root
+   group: root
+   mode: 0644
+   backup: yes
+
+- name: Netplan apply
+  raw: netplan apply
+
+

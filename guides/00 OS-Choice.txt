@@ -1,0 +1,5 @@
+Ubuntu 
+Current:Ubuntu 18.04 LTS	Bionic Beaver	Released April 26, 2018	EOL April, 2023
+
+Pro: Quick to install, newer software, easy to use.
+Con: Missing some infrastructure software(Ansible tower, FreeIPA), preinstall a lot of services and takes op space.

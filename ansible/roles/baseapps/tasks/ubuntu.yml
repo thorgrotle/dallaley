@@ -1,0 +1,21 @@
+--- 
+ - name: Install base apps from main repo
+   apt: name={{ packages }} state=latest
+   vars:
+    packages:
+    - nano
+    - zfs-fuse
+    - ntfs-3g
+    - nfs-common
+    - exfat-utils
+    - tmux
+    - python3-tk
+    - at 
+    - git
+    - net-tools
+    - traceroute
+    - mc
+    - sysstat
+    - htop
+    - bwm-ng
+    - mtools

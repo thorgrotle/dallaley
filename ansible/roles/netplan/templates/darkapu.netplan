@@ -1,0 +1,49 @@
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp1s0:
+      dhcp4: no
+      dhcp6: no
+      optional: true
+    enp2s0:
+      dhcp4: no
+      dhcp6: no
+      optional: true
+    enp3s0:
+      dhcp4: no
+      dhcp6: no
+      optional: true
+    enp4s0:
+      dhcp4: no
+      dhcp6: no
+      optional: true
+  bridges:
+    br0:
+      dhcp4: no
+      dhcp6: no
+      interfaces:
+        - enp1s0
+        - enp2s0
+        - enp3s0
+        - enp4s0
+      addresses: [ 10.0.75.2/24 ]
+      nameservers:
+        addresses:
+          - 10.0.75.2
+          - 8.8.8.8
+    parameters:
+       stp: false
+       forward-delay: 0
+  wifis:
+    wlp5s0:
+      dhcp4: no
+      dhcp6: no
+      addresses: [192.168.0.14/24]
+      gateway4: 192.168.0.1
+      nameservers:
+        addresses: [192.168.0.1, 8.8.8.8]
+      access-points:
+        "MortensYouSee":
+          password: "mutangnis"
+

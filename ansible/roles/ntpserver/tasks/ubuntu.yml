@@ -1,0 +1,7 @@
+---
+- name: Linux install NTP Service
+  apt: name=ntp state=latest
+
+- name: Start service ntpd
+  service: name=ntp enabled=yes state=restarted
+

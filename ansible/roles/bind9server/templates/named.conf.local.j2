@@ -1,0 +1,22 @@
+//
+// Do any local configuration here
+//
+
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+//include "/etc/bind/zones.rfc1918";
+
+zone "{{ LANDOMAIN }}" {
+     type master;
+     file "/etc/bind/{{ LANDOMAIN}}.zone";
+     allow-update { key rndc-key; };
+};
+ 
+# This is the zone definition for reverse DNS. replace 200.1.10 with your network
+# address in reverse notation - e.g my network address is 10.1.200
+zone "{{ LANREVIP }}.in-addr.arpa" {
+     type master;
+     file "/etc/bind/{{ LANREVDOMAIN }}.zone";
+     allow-update { key rndc-key; };
+};
+ 

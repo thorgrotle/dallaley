@@ -1,0 +1,8 @@
+---
+#- include: centos.yml
+#  when: ansible_distribution == 'Centos'
+- include: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+#- include: windows.yml
+#  when: ansible_os_family == 'Windows'
+

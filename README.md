@@ -11,15 +11,16 @@ Features NOW:
 -> Silence of the router!
 -> Serving Internet from wifi/ethernet/3G/4G/5G to wifi/ethernet
 -> DNS and NTP server
--> Traffic shaping
 -> Web interface via Cockpit port (localhost:9090)
 -> Monitoring via Zabbix ([lxc countainer]zabbix:80/zabbix)
 
 Features to come:
-Storage array for local backup
-ZFS storage
-ZFS Snapshot/Replication & and enabled Windows shadowcopy
-OpenVPN / 
+-> Traffic shaping
+-> Storage array for local backup
+-> ZFS storage
+-> ZFS Snapshot/Replication & and enabled Windows shadowcopy
+-> OpenVPN / Wireguard
+-> PXEServer
 
 Services are to running in lxd containers so if breached, they will be limited to that service.
 This is a mini server that works in relative confined resources with CPU power/ram, but can be scaled to a fulltime beefy Xeon server if needed.
@@ -41,39 +42,48 @@ RS232 to USB serial link
 Power/Reset buttons
 
 Software/Technologies:
-Coreboot
-Ubuntu
-netplan
-network-manager
-isc-dhcp-server
-Bind9
-ntpd
-iptables
-ufw
-nice
-lxd
-lvm2
-OpenVPN
-pxe/ipxe 
-tftpboot
-LAMP/LEMP stack
-letsencrypt
-Cockpit
-Zabbix
-Ansible/Ansible-tower
-openssh
-fail2ban
-cron
-smb4
-NFS
-ssmtp
-zfs/zol
-apparmor
+Coreboot         # Firmware
+Ubuntu 18.04     # Distribution
+lvm2             # 
+netplan          # Network Management
+network-manager  # Network Management
+wpasupplicant    # Wifi Client configuration
+isc-dhcp-server  # DHCP Server
+Bind9            # DNS Server
+ntpd             # Timeserver
+iptables         # Network routing
+LXC / LXD        # Container technology
+Cockpit          # Webinterface
+Zabbix           # Monitoring tool, runs in LXC container
+Ansible Server   # Open-source version of Ansible
+Ansible-tower    # Full version of Ansible (Propriatery)
+openssh          # OpenSSH Server - Remote Terminal
+cron             # 
+apparmor         # Application Armor
+nice             # Manage application CPU priority
+
+
+Ideas to implement:
+ufw              # Firewall
+smb4             # Samba fileserver - Windows file shares
+NFS              # NFS Server - Unix Network File Shares
+LAMP/LEMP stack  # Webserver Stack
+ssmtp            # Mailing Agent
+fail2ban         # Anti-hammering / network banning utility
+zfs/zol          # Next level filesystem
+pxe/ipxe         # Network Booting
+tftpboot         # Facilitate network booting
+OpenVPN          # VPN server 
+Letsencrypt      # SSL certificate by signed by Letsencrypt
+SelfSignCert     # SSL certificate selfsigned
+
+
+
 
 
 How to deploy:
-configurator
-ansible playbook
+Guides
+Ansible playbook
 
 Links:
 https://www.itso.dk

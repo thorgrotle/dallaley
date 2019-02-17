@@ -1,0 +1,6 @@
+---
+- name: Install Cockpit
+  apt: name=cockpit state=latest
+  notify: Start service cockpit
+
+  

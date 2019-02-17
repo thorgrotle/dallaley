@@ -1,0 +1,37 @@
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp1s0:
+      dhcp4: no
+      dhcp6: no
+      optional: true
+    enp2s0:
+      dhcp4: no
+      dhcp6: no
+      optional: true
+    enp3s0:
+      dhcp4: no
+      dhcp6: no
+      optional: true
+    enp4s0:
+      dhcp4: no
+      dhcp6: no
+      optional: true
+  bridges:
+    {{ LANNIC }}:
+      dhcp4: no
+      dhcp6: no
+      interfaces:
+        - enp1s0
+        - enp2s0
+        - enp3s0
+        - enp4s0
+      addresses: [ {{ LANIP }}/24 ]
+      nameservers:
+        addresses:
+          - {{ LANDNS }}
+          - 8.8.8.8
+      parameters:
+        stp: false
+        forward-delay: 0

@@ -1,0 +1,22 @@
+# This file describes the network interfaces available on your system
+# For more information, see netplan(5).
+network:
+  version: 2
+  renderer: networkd
+  bonds:
+    bond0:
+      interfaces:
+      - enp1s0
+      - enp2s0
+      - enp3s0
+      - enp4s0
+  ethernets:
+    bond0:
+      dhcp4: yes
+  wifis:
+    wlp5s0:
+      dhcp4: yes
+      access-points:
+        MortensYouSee:
+          password: mutangnis
+

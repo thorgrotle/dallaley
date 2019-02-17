@@ -1,0 +1,47 @@
+---
+- name: install bind9 server
+  apt: name={{ packages }} state=latest
+  vars:
+   packages:
+   - apparmor
+   - apparmor-utils
+   - apparmor-profiles
+   - bind9
+   - bind9utils
+   - bind9-doc
+   - dnsutils
+
+- name: install bind9 apparmor config
+  template: src={{ item.src }} dest={{ item.dest }} mode={{ item.perm }} owner={{ item.owner }} group={{ item.group }} backup=yes
+  with_items:
+   - { src: 'usr.sbin.named.j2', dest: '/etc/apparmor.d/local/usr.sbin.named', perm: '0644', owner: 'root', group: 'root' }
+- name: reparse bind9 apparmor rules
+  raw: apparmor_parser -r /etc/appammor.d/usr.sbin.named
+
+- name: Start service apparmor       
+  service: name=apparmor enabled=yes state=restarted
+
+- name: Linux Setting file permissiom /etc/bind
+  file: path=/etc/bind state=directory mode=0755 owner=bind group=bind
+
+- name: Linux install bind9 conf
+  template: src={{ item.src }} dest={{ item.dest }} mode={{ item.perm }} owner={{ item.owner }} group={{ item.group }} backup=yes
+  with_items:
+   - { src: 'lan.zone.j2', dest: '/etc/bind/{{ LANDOMAIN }}.zone', perm: '0644', owner: 'bind', group: 'bind' }
+   - { src: 'lan.rev.zone.j2', dest: '/etc/bind/{{ LANREVDOMAIN }}.zone', perm: '0644', owner: 'bind', group: 'bind' }
+   - { src: 'named.conf.j2', dest: '/etc/bind/named.conf', perm: '0644', owner: 'root', group: 'bind' }
+   - { src: 'named.conf.default-zones.j2', dest: '/etc/bind/named.conf.default-zones', perm: '0644', owner: 'root', group: 'bind' }
+   - { src: 'named.conf.options.j2', dest: '/etc/bind/named.conf.options', perm: '0644', owner: 'root', group: 'bind' }
+   - { src: 'named.conf.local.j2', dest: '/etc/bind/named.conf.local', perm: '0644', owner: 'root', group: 'bind' }
+   - { src: 'rndc.key.j2', dest: '/etc/bind/rndc.key', perm: '0640', owner: 'bind', group: 'bind' }
+   - { src: 'db.root', dest: '/etc/bind/db.root', perm: '0644', owner: 'root', group: 'root' }
+   - { src: 'db.0', dest: '/etc/bind/db.0', perm: '0644', owner: 'root', group: 'root' }
+   - { src: 'db.127', dest: '/etc/bind/db.127', perm: '0644', owner: 'root', group: 'root' }
+   - { src: 'db.255', dest: '/etc/bind/db.255', perm: '0644', owner: 'root', group: 'root' }
+   - { src: 'db.local', dest: '/etc/bind/db.local', perm: '0644', owner: 'root', group: 'root' }
+   - { src: 'db.empty', dest: '/etc/bind/db.empty', perm: '0644', owner: 'root', group: 'root' }
+#  notify: Start service bind9
+
+- name: Start service bind9
+  service: name=bind9 enabled=yes state=restarted
+

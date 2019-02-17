@@ -1,0 +1,8 @@
+---
+- name: Linux install ishare service
+  template: src={{ item.src }} dest={{ item.dest }} mode={{ item.perm }}
+  with_items:
+   - { src: 'ishare.service', dest: '/etc/systemd/system/ishare.service', perm: '644' }
+   - { src: 'ishare.j2', dest: '/usr/bin/ishare.sh', perm: '0755' }
+  notify: Start service ishare
+

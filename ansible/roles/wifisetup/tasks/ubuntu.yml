@@ -1,0 +1,17 @@
+---
+- name: Install Network-Manager
+  apt: name=network-manager state=latest
+  
+- name: restart network-manager
+  service: name=network-manager enabled=yes state=restarted
+
+- name: Checking if network {{ SSID }} exist
+  stat: path="/etc/NetworkManager/system-connections/{{ SSID }}" 
+  register: installwifi
+  
+- name: Connecting to WIFi {{ SSID }}
+  command: nmcli device wifi connect {{ SSID }} password {{ PSK }}
+  when: not installwifi.stat.exists
+  notify:
+  - restart network-manager
+

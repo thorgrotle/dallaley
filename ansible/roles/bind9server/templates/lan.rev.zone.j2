@@ -1,0 +1,16 @@
+$ORIGIN .
+$TTL 600       ; 10 minutes
+{{ LANREVIP }}.in-addr.arpa    IN SOA  {{ HOSTNAME }}.{{ LANDOMAIN }}. admin.{{ LANDOMAIN }}. (
+                                2014072013 ; serial
+                                28800      ; refresh (8 hours)
+                                604800     ; retry (1 week)
+                                604800     ; expire (1 week)
+                                86400      ; minimum (1 day)
+                                )
+                        NS      {{ HOSTNAME }}.{{ LANDOMAIN }}.
+$ORIGIN {{ LANREVIP }}.in-addr.arpa.
+1                       PTR     {{ LANDOMAIN }}.
+                        PTR     {{ HOSTNAME }}.{{ LANDOMAIN }}.
+$ORIGIN {{ LANREVIP }}.in-addr.arpa.
+$TTL 600       ; 10 minutes
+
