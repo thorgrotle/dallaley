@@ -1,0 +1,31 @@
+# List of all affected configuration files
+/etc/fstab
+
+# Bind9 config
+/etc/bind
+/etc/bind/db.local
+/etc/bind/home.lan.rev.zone
+/etc/bind/zones.rfc1918
+/etc/bind/db.root
+/etc/bind/named.conf.default-zones
+/etc/bind/home.lan.zone
+/etc/bind/db.empty
+/etc/bind/db.255
+/etc/bind/named.conf.local
+/etc/bind/rndc.key
+/etc/bind/home.lan.zone.jnl
+/etc/bind/named.conf.options
+/etc/bind/bind.keys
+/etc/bind/named.conf
+/etc/bind/db.127
+/etc/bind/db.0
+/etc/apparmor.d/local/usr.sbin.named
+
+# iShare Internet share
+/etc/systemd/system/ishare.service
+/usr/bin/ishare.sh
+
+# Netplan
+/etc/netplan/01-netcfg.yaml
+
+/etc/resolve.conf

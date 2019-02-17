@@ -1,9 +1,0 @@
-[Unit]
-Description= Internet sharing script
-After=network.target
-[Service]
-Type=forking
-User=root
-ExecStart=/usr/bin/ishare.sh
-[Install]
-WantedBy=multi-user.target
