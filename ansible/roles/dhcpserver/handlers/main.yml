@@ -1,0 +1,4 @@
+---
+- name: Start service isc-dhcp-server
+  service: name=isc-dhcp-server enabled=yes state=restarted
+

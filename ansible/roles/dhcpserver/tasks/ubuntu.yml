@@ -1,0 +1,18 @@
+---
+- name: install isc-dhcp-server
+  apt: name={{ packages }} update_cache=yes
+  vars:
+   - apparmor
+   - apparmor-utils
+   - apparmor-profiles
+   - isc-dhcp-server
+
+- name: Linux install isc-dhcp-server.conf
+  template: src={{ item.src }} dest={{ item.dest }} mode={{ item.perm }} backup=yes
+  with_items:
+   - { src: 'dhcpd.j2', dest: '/etc/dhcp/dhcpd.conf', perm: '644' }
+   - { src: 'isc-dhcp-server.j2', dest: '/etc/default/isc-dhcp-server', perm: '644' }
+  notify: Start service isc-dhcp-server
+
+- name: Start service isc-dhcp-server
+  service: name=isc-dhcp-server enabled=yes state=restarted

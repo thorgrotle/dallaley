@@ -1,0 +1,67 @@
+key "rndc-key" {
+        algorithm hmac-md5;
+        secret "{{ RNDCKEY }}";
+};
+
+ddns-updates on;
+ddns-update-style standard;
+authoritative;
+ignore client-updates;
+ 
+allow unknown-clients;
+allow booting;
+allow bootp;
+
+use-host-decl-names on;
+default-lease-time 3600; #24  hours
+max-lease-time 7200;
+log-facility local7;
+
+
+ 
+# home.lan DNS zones
+zone {{ LANDOMAIN }}. {
+  primary {{ LANDNS }}; # This server is the primary DNS server for the zone
+  key rndc-key;       # Use the key we defined earlier for dynamic updates
+}
+zone {{ LANREVDOMAIN }}. {
+  primary {{ LANDNS }}; # This server is the primary reverse DNS for the zone
+  key rndc-key;       # Use the key we defined earlier for dynamic updates
+}
+ 
+# home.lan LAN range
+subnet {{ LAN }} netmask 255.255.255.0 {
+  range {{ LANRANGE }};
+  option subnet-mask 255.255.255.0;
+  option routers {{ LANGATE }};
+  option domain-name-servers {{ LANDNS }};
+  option domain-name "{{ LANDOMAIN }}";
+  option ntp-servers {{ LANNTP }};
+  ddns-domainname "{{ LANDOMAIN }}.";
+  ddns-rev-domainname "{{ LANREVIP }}.";
+  next-Server 10.0.75.2;
+}
+
+
+filename "pxelinux.0";
+
+#include "/etc/dhcp/ipxe.options";
+#
+#option client-arch code 93 = unsigned integer 16;
+#  if option client-arch != 00:00 {
+#     filename "ipxe.efi";
+#     option root-path "http://{{ HOSTNAME }}/boot.ipxe";
+#     filename "http://{{ HOSTNAME }}/boot.ipxe";
+# } else {
+#     filename "undionly.kpxe";
+#}
+
+# Static hosts give an IP addr by MAC address
+#group {
+#  # Fist static host
+#  host static1.dragon.lab {
+#      hardware ethernet 01:23:45:67:89:ab;
+#      fixed-address 10.1.200.120;
+#      ddns-hostname "static1";
+#  }
+#}
