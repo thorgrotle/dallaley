@@ -2,6 +2,7 @@
 - name: install isc-dhcp-server
   apt: name={{ packages }} update_cache=yes
   vars:
+   packages:
    - apparmor
    - apparmor-utils
    - apparmor-profiles
