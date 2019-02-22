@@ -9,7 +9,7 @@
   stat: path="/etc/NetworkManager/system-connections/{{ SSID }}" 
   register: installwifi
   
-- name: Connecting to WIFi {{ SSID }}
+- name: Connecting to WIFI {{ SSID }}
   command: nmcli device wifi connect {{ SSID }} password {{ PSK }}
   when: not installwifi.stat.exists
   notify:

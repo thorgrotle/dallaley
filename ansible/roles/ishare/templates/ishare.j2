@@ -1,9 +1,36 @@
 #!/bin/bash
-sysctl net.ipv4.ip_forward=1
-iptables -t nat -A POSTROUTING -o {{ INTERNETNIC }} -j MASQUERADE
-iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-iptables -A FORWARD -i {{ LANNIC }} -o {{ INTERNETNIC }} -j ACCEPT
-iptables -I INPUT -p udp --dport 67 -i {{ LANNIC }} -j ACCEPT
-iptables -I INPUT -p udp --dport 53 -s {{ LAN }}/24 -j ACCEPT
-iptables -I INPUT -p tcp --dport 53 -s {{ LAN }}/24 -j ACCEPT
+function start()
+        {
+        echo "Starting internet share service"
+        sysctl net.ipv4.ip_forward=1
+        # Drop all incoming traffic from INTERNET Interface
+        iptables -F
+        iptables -A INPUT -s {{ WAN }}/24 -j DROP
+        # Opening for traffic from LAN Interface
+        iptables -t nat -A POSTROUTING -o {{ INTERNETNIC }} -j MASQUERADE
+        iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+        iptables -A FORWARD -i {{ LANNIC }} -o {{ INTERNETNIC }} -j ACCEPT
+        iptables -I INPUT -p udp --dport 67 -i {{ LANNIC }} -j ACCEPT
+        iptables -I INPUT -p udp --dport 53 -s {{ LAN }}/24 -j ACCEPT
+        iptables -I INPUT -p tcp --dport 53 -s {{ LAN }}/24 -j ACCEPT
+        }
 
+
+function stop()
+        {
+        echo "Stopping internet share service"
+        # Drop all incoming traffic from INTERNET Interface
+        sysctl net.ipv4.ip_forward=0
+        iptables -F
+        iptables -A INPUT -s {{ WAN }}/24 -j DROP
+        }
+
+function status()
+        {
+        iptables -L -n -v
+        }
+
+
+case $1 in
+  start|stop|status) "$1" ;;
+esac
