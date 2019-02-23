@@ -47,5 +47,6 @@
    - bind9server
    - baseapps
    - cockpit
+   - hfsc-shape
 #   - zabbixserver
 #   - trafficshape

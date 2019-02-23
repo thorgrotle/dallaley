@@ -1,0 +1,13 @@
+[Unit]
+Description=Traffic-shapping
+After=network.target
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=/usr/bin/traffic-shaping.sh start
+ExecStop=/usr/bin/traffic-shaping.sh stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,3 @@
+---
+- name: Start service traffic-shaping
+  service: name=traffic-shaping.service enabled=yes state=restarted

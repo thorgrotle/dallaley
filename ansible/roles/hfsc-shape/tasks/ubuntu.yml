@@ -1,0 +1,8 @@
+---
+- name: Linux install traffic-shaping service
+  template: src={{ item.src }} dest={{ item.dest }} mode={{ item.perm }}
+  with_items:
+   - { src: 'traffic-shaping.service', dest: '/etc/systemd/system/traffic-shaping.service', perm: '644' }
+   - { src: 'traffic-shaping.j2', dest: '/usr/bin/traffic-shaping.sh', perm: '0755' }
+  notify: Start service traffic-shaping
+
