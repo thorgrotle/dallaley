@@ -19,6 +19,8 @@
     SSID: TestWifi
     PSK: Testpassword
     WIFI: wlp5s0
+    WANDOWNRATE: 80000kbit
+    WANUPRATE: 25000kbit
     WANIP: 192.168.0.100
     WANDNS: 192.168.0.1    
     WAN: 192.168.0.0    
@@ -38,7 +40,7 @@
   tasks:
 
   roles:
-   - wifisetup
+#   - wifisetup
    - netplan
    - packagesupgrade
    - ishare
@@ -49,4 +51,3 @@
    - cockpit
    - hfsc-shape
 #   - zabbixserver
-#   - trafficshape

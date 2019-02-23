@@ -70,20 +70,21 @@
 # Here's how it's done:
 
 # set this to your internet-facing network interface:
-WAN_INTERFACE=wlp5s0
+WAN_INTERFACE={{ INTERNETNIC }}
 
 # set this to your local network interface:
-LAN_INTERFACE=LAN0
-LAN_NETWORK=10.0.75.0/24
+LAN_INTERFACE={{ LANNIC }}
+LAN_NETWORK={{ LAN }}/24
 
 # how fast is your downlink?
-MAX_DOWNRATE=85000kbit
+MAX_DOWNRATE={{ WANDOWNRATE }}
+MAX_UPRATE={{ WANUPRATE }}
 
 # how close should we get to max down? e.g. 95%
 USE_DOWNPERCENT=0.92
 
 # how fast is your uplink?
-MAX_UPRATE=25000kbit
+
 
 # how close should we get to max up? e.g. 90%
 USE_UPPERCENT=0.90
@@ -101,12 +102,14 @@ INTERACTIVE_PORT=3074
 #TC=/usr/sbin/tc
 TC=/sbin/tc
 
-# remove any existing qdiscs
-# this lets you re-run this script as much as you want to try different
-# settings, we're always starting fresh
+
 
 function start()
         {
+        echo "Start Traffic Shaping"
+        # remove any existing qdiscs
+        # this lets you re-run this script as much as you want to try different
+        # settings, we're always starting fresh
         $TC qdisc del dev $WAN_INTERFACE root 2> /dev/null
         $TC qdisc del dev $WAN_INTERFACE ingress 2> /dev/null
         $TC qdisc del dev $LAN_INTERFACE root 2> /dev/null
@@ -151,6 +154,7 @@ function start()
         # that is, we do not police-limit prioritized traffic.
 
         # prioritize interactive port blocks: xbox gaming
+        echo "Adding interactive ports WAN"
         for i in $INTERACTIVE_PORT 30000 31000 32000 33000 34000 35000 36000 37000 38000 39000 40000 41000; do
         # recent xbox games enjoy using high ports -- the same port numbers which
         # client OSes occasionally also use for source ports for bulk traffic (e.g.
@@ -176,6 +180,7 @@ function start()
         # prioritized for xbox. in fact it's probably safe to prioritize any low
         # source AND dest ports (lower than 20,000) other than 80 and 443 (but we
         # don't do that here)
+        echo "Adding important ports WAN"
         for i in 22 4500 9000 19302 19303 19304 19305 19306 19307 19308 19309; do
           $TC filter add dev $WAN_INTERFACE protocol ip parent 1:0 prio 1 u32 match ip sport $i 0xffff flowid 1:10
           $TC filter add dev $WAN_INTERFACE protocol ip parent 1:0 prio 1 u32 match ip dport $i 0xffff flowid 1:10
@@ -185,12 +190,13 @@ function start()
         done
 
         # THOR
+        echo "Adding http ports WAN"
         for i in 80 443; do
-          $TC filter add dev $WAN_INTERFACE protocol ip parent 1:0 prio 30 u32 match ip sport $i 0xffff flowid 1:10
-          $TC filter add dev $WAN_INTERFACE protocol ip parent 1:0 prio 30 u32 match ip dport $i 0xffff flowid 1:10
+          $TC filter add dev $WAN_INTERFACE protocol ip parent 1:0 prio 50 u32 match ip sport $i 0xffff flowid 1:10
+          $TC filter add dev $WAN_INTERFACE protocol ip parent 1:0 prio 50 u32 match ip dport $i 0xffff flowid 1:10
         # policer:
-          $TC filter add dev $WAN_INTERFACE parent ffff: protocol ip prio 30 u32 match ip sport $i 0xffff flowid :1
-          $TC filter add dev $WAN_INTERFACE parent ffff: protocol ip prio 30 u32 match ip dport $i 0xffff flowid :1
+          $TC filter add dev $WAN_INTERFACE parent ffff: protocol ip prio 50 u32 match ip sport $i 0xffff flowid :1
+          $TC filter add dev $WAN_INTERFACE parent ffff: protocol ip prio 50 u32 match ip dport $i 0xffff flowid :1
         done
 
         # also VPN IP range - set this if you know your corporate VPN IP range
@@ -278,13 +284,18 @@ function start()
         #$TC qdisc add dev $LAN_INTERFACE parent 1:11 handle 40: fq_codel
         }
 
-function start()
+function stop()
         {
-        tc qdisc del dev wlp5s0 root
+        echo "Removing traffic shaping"
+        $TC qdisc del dev $WAN_INTERFACE root 2> /dev/null
+        $TC qdisc del dev $WAN_INTERFACE ingress 2> /dev/null
+        $TC qdisc del dev $LAN_INTERFACE root 2> /dev/null
+        $TC qdisc del dev $LAN_INTERFACE ingress 2> /dev/null
         }
 function status()
         {
-        tc qdisc show dev wlp5s0 root
+        tc qdisc show dev $WAN_INTERFACE
+        tc qdisc show dev $LAN_INTERFACE
         }
 
 
