@@ -1,8 +1,10 @@
-# dallaley
+# dallaley router project
 ----
 ## Purpose:
-Most consumer router suck! They are either limited in features, unstable/needs reboot often, expensive or otherwise locked down.
+Most consumer router have some issues, They are either limited in features, unstable/needs reboot often, expensive or otherwise locked down.
+
 Welcome to project Dallaley: The router that is based on open source an freely configurable and update-able.
+
 
 
 ## Features NOW:
@@ -80,7 +82,7 @@ Bind9            | DNS Server
 
 ntpd             | Timeserver
 
-iptables         | Network routing
+iptables         | Network routing / Firewall
 
 LXC / LXD        | Container technology
 
@@ -100,9 +102,9 @@ apparmor         | Application Armor
 
 nice             | Manage application CPU priority
 
+tc               | Traffic shaping (QOS) service
 
 ## Ideas to implement:
-ufw              | Firewall
 
 smb4             | Samba fileserver - Windows file shares
 
@@ -127,8 +129,8 @@ Letsencrypt      | SSL certificate by signed by Letsencrypt
 SelfSignCert     | SSL certificate selfsigned
 
 
-
-
+## Default Config
+Default config is setup for my current homeconfig, which connect with wifi as client and share to all ethernet ports on my APU4B4 board. This can be changed by changing ansible config, to wanted network settings.
 
 ## How to deploy:
 Guides

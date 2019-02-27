@@ -1,6 +1,9 @@
 ---
 - name: Install Network-Manager
   apt: name=network-manager state=latest
+
+- name: install wpasupplicants
+  apt: name=wpasupplicant state=latest
   
 - name: restart network-manager
   service: name=network-manager enabled=yes state=restarted

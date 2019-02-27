@@ -1,5 +1,5 @@
 [Unit]
-Description=Traffic-shapping
+Description=Traffic-shaping
 After=network.target
 
 [Service]
